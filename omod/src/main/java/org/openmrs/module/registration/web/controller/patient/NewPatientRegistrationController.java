@@ -21,6 +21,7 @@
 package org.openmrs.module.registration.web.controller.patient;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -158,6 +159,9 @@ public class NewPatientRegistrationController {
 			patient = generatePatient(parameters);
 			patient = Context.getPatientService().savePatient(patient);
 			RegistrationUtils.savePatientSearch(patient);
+			//Added date_changed by gwcs
+            Patient updatedPatient = generatePatient(patient, parameters);
+            patient = Context.getPatientService().savePatient(updatedPatient);
 			logger.info(String.format("Saved new patient [id=%s]",
 					patient.getId()));
 
@@ -185,7 +189,12 @@ public class NewPatientRegistrationController {
 	 * @param parameters
 	 * @return
 	 * @throws Exception
+	 * 
 	 */
+	//Added date_changed by gwcs
+    private Patient generatePatient(Patient patient, Map<String, String> parameters) throws ParseException {	
+		return patient;
+	}
 	private Patient generatePatient(Map<String, String> parameters)
 			throws Exception {
 
